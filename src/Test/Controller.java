@@ -34,27 +34,32 @@ public class Controller {
         }return index;
     }
 
-    public static Staff[] delete(Staff[] staff){
+    public static Staff[] delete(Staff[] staff) {
         int index = findId(staff);
-
-        for (int i = index; i < staff.length-1 ; i++) {
-            staff[i] = staff[i + 1];
+        if (index >= 0) {
+            for (int i = index; i < staff.length - 1; i++) {
+                staff[i] = staff[i + 1];
+            }
+            Staff[] newStaff = new Staff[staff.length - 1];
+            for (int i = 0; i < newStaff.length; i++) {
+                newStaff[i] = staff[i];
+            }
+            return newStaff;
         }
-
-        Staff[] newStaff = new Staff[staff.length - 1];
-        for (int i = 0; i < newStaff.length; i++) {
-            newStaff[i] = staff[i];
-        }
-        return newStaff;
+        return null;
     }
+
     public static Staff[] edit(Staff[] staff){
         int index = findId(staff);
-        Staff staff1 = create();
-        staff[index].setAddress(staff1.getAddress());
-        staff[index].setName(staff1.getName());
-        staff[index].setAge(staff1.getAge());
-        staff[index].setPhoneNumber(staff1.getPhoneNumber());
-        return staff;
+        if (index >= 0){
+            Staff staff1 = create();
+            staff[index].setAddress(staff1.getAddress());
+            staff[index].setName(staff1.getName());
+            staff[index].setAge(staff1.getAge());
+            staff[index].setPhoneNumber(staff1.getPhoneNumber());
+            return staff;
+        }
+        return null;
     }
 
     public static Staff create(){

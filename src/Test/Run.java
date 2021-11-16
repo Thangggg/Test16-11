@@ -29,7 +29,6 @@ public class Run {
                     break;
                 default:
                     System.out.println("Nhâp từ 1-4");
-                    break;
             }
         }
     }
