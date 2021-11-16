@@ -3,18 +3,9 @@ package Test;
 import java.util.Scanner;
 
 public class Controller {
+    static Scanner sc = new Scanner(System.in);
     public static Staff[] addStaff (Staff[] staff){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Nhập Tên");
-        String name = sc.next();
-        System.out.println("Nhập Tuổi");
-        int age = sc.nextInt();
-        System.out.println("Nhập Địa chỉ");
-        String address = sc.next();
-        System.out.println("Nhập Số Điện Thoại");
-        String phoneNumber = sc.next();
-
-        Staff staff1 = new Staff(phoneNumber,name,address,age);
+        Staff staff1 = create();
 
         Staff[] newStaff = new Staff[staff.length + 1];
         for (int i = 0; i < staff.length; i++) {
@@ -31,16 +22,20 @@ public class Controller {
         }
     }
 
-    public static Staff[] delete(Staff[] staff){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Nhập id muốn xóa");
+    public static int findId(Staff[]staff){
+        System.out.println("Nhập id ");
         int id = sc.nextInt();
         int index = -1;
         for (int i = 0; i < staff.length; i++) {
             if (id == staff[i].getId()){
                 index = i;
+                return index;
             }
-        }
+        }return index;
+    }
+
+    public static Staff[] delete(Staff[] staff){
+        int index = findId(staff);
 
         for (int i = index; i < staff.length-1 ; i++) {
             staff[i] = staff[i + 1];
@@ -53,29 +48,26 @@ public class Controller {
         return newStaff;
     }
     public static Staff[] edit(Staff[] staff){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Nhập Id muốn sửa");
-        int id = sc.nextInt();
-        int index = -1;
-        for (int i = 0; i < staff.length; i++) {
-            if (id == staff[i].getId()){
-                index = i;
-            }
-        }
-
-        System.out.println("Nhập lại tên:");
-        String name = sc.next();
-        System.out.println("Nhập lại tuổi:");
-        int age = sc.nextInt();
-        System.out.println("Nhập lại dịa chỉ:");
-        String address = sc.next();
-        System.out.println("Nhập lại số điện thoại:");
-        String phoneNumber = sc.next();
-
-        staff[index].setAddress(address);
-        staff[index].setName(name);
-        staff[index].setAge(age);
-        staff[index].setPhoneNumber(phoneNumber);
+        int index = findId(staff);
+        Staff staff1 = create();
+        staff[index].setAddress(staff1.getAddress());
+        staff[index].setName(staff1.getName());
+        staff[index].setAge(staff1.getAge());
+        staff[index].setPhoneNumber(staff1.getPhoneNumber());
         return staff;
     }
+
+    public static Staff create(){
+        System.out.println("Nhập tên:");
+        String name = sc.next();
+        System.out.println("Nhập tuổi:");
+        int age = sc.nextInt();
+        System.out.println("Nhập dịa chỉ:");
+        String address = sc.next();
+        System.out.println("Nhập số điện thoại:");
+        String phoneNumber = sc.next();
+        return new Staff(phoneNumber,name,address,age);
+    }
+
+
 }
